@@ -6,21 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-class User extends Model
+class Lesson extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable =
-    [
-        'name',
-        'email',
-        'password',
-        'phone',
-        'role'
+    protected $fillable = [
+        'course_id',
+        'title',
+        'order_number'
     ];
 
-    protected $casts=[
+    protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime'
@@ -32,7 +28,7 @@ class User extends Model
         'deleted_at'
     ];
 
-    public function courses(){
-        return $this->hasMany(Course::class, 'instructor_id');
+    public function course(){
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }
