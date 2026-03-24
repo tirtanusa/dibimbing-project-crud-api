@@ -14,7 +14,7 @@ Route::get('/user',[UserController::class, 'index']);
 Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/{id}', [CourseController::class, 'show']);
 Route::post('/courses', [CourseController::class, 'store']);
-Route::put('/courses/{id}', [CourseController::class, 'update']);
+Route::match(['put', 'patch'],'/courses/{id}', [CourseController::class, 'update']);
 Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
 //Courses CRUD
 
@@ -24,8 +24,9 @@ Route::post('/users', [UserController::class, 'store']);
 //Users CRUD
 
 //Category CRUD
-Route::get('/users', [CategoryController::class, 'index']);
-Route::post('/users', [CategoryController::class, 'store']);
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
+Route::post('/categories', [CategoryController::class, 'store']);
 //Category CRUD
 
 

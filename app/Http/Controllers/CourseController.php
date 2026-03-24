@@ -14,13 +14,13 @@ class CourseController extends Controller
     //Get All Courses
     public function index(): JsonResponse{
 
-        $course = Course::all();
+        $course = Course::with(['category', 'instructor:id,name'])->get();
 
         return $this->successResponse($course, 'Courses retrieved successfully');
     }
 
     public function show(string $request): JsonResponse{
-        $course = Course::find($request);
+        $course = Course::with(['category', 'instructor:id,name'])->findOrFail($request);
 
         if(!$course){
             return $this->notFoundResponse();
@@ -85,5 +85,68 @@ class CourseController extends Controller
         $course = Course::create($validated);
 
         return $this->createdResponse($course, 'Course created successfully');
+    }
+
+    public function update(Request $request, $id): JsonResponse
+    {
+        $course = Course::findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'sometimes|string|min:3|max:200',
+            'description' => 'sometimes|string|max:1000',
+            'price' => 'sometimes|integer|min:0',
+            'max_student' => 'sometimes|integer|min:0',
+            'current_student' => 'nullable|integer|min:0',
+            'level' => 'nullable|string|in:beginner,intermediate,advanced',
+            'status' => 'nullable|string|in:draft,published',
+            'instructor_id' => 'sometimes|exists:users,id',
+            'category_id' => 'nullable|exists:categories,id'
+        ], [
+
+            // TITLE
+            'title.string' => 'Title harus berupa teks',
+            'title.min' => 'Title minimal 3 karakter',
+            'title.max' => 'Title maksimal 200 karakter',
+
+            // DESCRIPTION
+            'description.string' => 'Description harus berupa teks',
+            'description.max' => 'Description maksimal 1000 karakter',
+
+            // PRICE
+            'price.integer' => 'Price harus berupa angka',
+            'price.min' => 'Price tidak boleh kurang dari 0',
+
+            // MAX STUDENT
+            'max_student.integer' => 'Max student harus berupa angka',
+            'max_student.min' => 'Max student tidak boleh kurang dari 0',
+
+            // CURRENT STUDENT
+            'current_student.integer' => 'Current student harus berupa angka',
+            'current_student.min' => 'Current student tidak boleh kurang dari 0',
+
+            // LEVEL
+            'level.in' => 'Level harus beginner, intermediate, atau advanced',
+
+            // STATUS
+            'status.in' => 'Status harus draft atau published',
+
+            // INSTRUCTOR
+            'instructor_id.exists' => 'Instructor tidak ditemukan',
+
+            // CATEGORY
+            'category_id.exists' => 'Category tidak ditemukan'
+        ]);
+
+        $course->update($validated);
+
+        return $this->successResponse($course, 'Course updated successfully');
+    }
+
+    public function destroy($id): JsonResponse{
+        $course = Course::findOrFail($id);
+
+        $course->delete();
+
+        return $this->successResponse($course, 'Data berhasil dihapus');
     }
 }
