@@ -2,34 +2,31 @@
 
 namespace App\Http\Controllers;
 use App\Models\Course;
+use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    use SoftDeletes;
+    use SoftDeletes, ApiResponse;
 
     //Get All Courses
     public function index(): JsonResponse{
 
         $course = Course::all();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Course retrieved successfully',
-            'data' => $course
-        ]);
+        return $this->successResponse($course, 'Courses retrieved successfully');
     }
 
-    public function show(Request $request): JsonResponse{
-        $course = Course::findOrFail($request);
+    public function show(string $request): JsonResponse{
+        $course = Course::find($request);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Course Found!',
-            'data' => $course
-        ]);
+        if(!$course){
+            return $this->notFoundResponse();
+        }
+
+        return $this->successResponse($course, 'Course retrieved successfully');
     }
 
     public function store(Request $request): JsonResponse
@@ -87,10 +84,6 @@ class CourseController extends Controller
 
         $course = Course::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Data berhasil ditambahkan',
-            'data' => $course
-        ], 201);
+        return $this->createdResponse($course, 'Course created successfully');
     }
 }
