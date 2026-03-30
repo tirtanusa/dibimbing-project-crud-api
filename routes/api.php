@@ -12,6 +12,11 @@ Route::get('/user',[UserController::class, 'index']);
 
 //Courses CRUD
 Route::apiResource('courses', CourseController::class)->except(['edit', 'create']);
+Route::middleware(['role:instructor'])->group(function () {
+    Route::post('/courses', [CourseController::class, 'store']);
+    Route::match(['PUT', 'PATCH'], '/courses/{course}', [CourseController::class, 'update']);
+    Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
+});
 //Courses CRUD
 
 //Users CRUD
