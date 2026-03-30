@@ -6,61 +6,46 @@ use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CourseController extends Controller
 {
     use SoftDeletes, ApiResponse;
-
     //Get All Courses
-    public function index(): JsonResponse{
+    public function index(): JsonResponse
+    {
+        $query = Course::with(['category', 'instructor:id,name']);
 
-        $course = Course::with(['category', 'instructor:id,name'])->get();
-
-        if(!$course){
-            return $this->notFoundResponse();
-        }
-
-        //Search Judul
+        // Search Judul
         if(request()->has('search')){
-            $search = request()->query('search');
-            $course = Course::with(['category', 'instructor:id,name'])->where('title', 'like', "%$search%")
-            ->get();
+            $search = request('search');
+            $query->where('title', 'like', "%{$search}%");
         }
-        //Search Judul
 
-        //Filter level
+        // Filter level
         if(request()->has('level')){
-            $level = request()->query('level');
-            $course = Course::with(['category', 'instructor:id,name'])->where('level', $level)->get();
+            $query->where('level', request('level'));
         }
-        //Filter level
 
-        //Filter Category
+        // Filter category
         if(request()->has('category_id')){
-            $categoryId = request()->query('category_id');
-            $course = Course::with(['category', 'instructor:id,name'])->where('category_id', $categoryId)->get();
+            $query->where('category_id', request('category_id'));
         }
-        //Filter Category
 
-        //Sort Price,enrolled count, and rating accepting request sort_by and order
-        if(request()->has('sort_by') && request()->has('order')){
-            $sortBy = request()->query('sort_by');
-            $order = request()->query('order');
+        // Sorting
+        $sortBy = request('sort_by', 'created_at');
+        $order = request('order', 'desc');
 
-            if(!$order){
-                $order = 'desc';
-            }
-
-            if(!$sortBy){
-                $sortBy = 'created_at';
-            }
-
-            if(in_array($sortBy, ['price', 'enrolled_count', 'rating']) && in_array($order, ['asc', 'desc'])){
-                $course = Course::with(['category', 'instructor:id,name'])->orderBy($sortBy, $order)->get();
-            }
+        if(in_array($sortBy, ['price','enrolled_count','rating','created_at']) &&
+        in_array($order, ['asc','desc'])){
+            $query->orderBy($sortBy, $order);
         }
-        //Sort Price
 
+        $course = $query->get();
+
+        if($course->isEmpty()){
+            return $this->notFoundResponse('Kursus tidak ditemukan');
+        }
 
         return $this->successResponse($course, 'Data kursus berhasil diambil');
     }
