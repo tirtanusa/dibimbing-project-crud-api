@@ -16,7 +16,7 @@ class CourseController extends Controller
 
         $course = Course::with(['category', 'instructor:id,name'])->get();
 
-        return $this->successResponse($course, 'Courses retrieved successfully');
+        return $this->successResponse($course, 'Data kursus berhasil diambil');
     }
 
     public function show(string $request): JsonResponse{
@@ -26,7 +26,7 @@ class CourseController extends Controller
             return $this->notFoundResponse();
         }
 
-        return $this->successResponse($course, 'Course retrieved successfully');
+        return $this->successResponse($course, 'Data kursus berhasil diambil');
     }
 
     public function store(Request $request): JsonResponse
@@ -84,7 +84,7 @@ class CourseController extends Controller
 
         $course = Course::create($validated);
 
-        return $this->createdResponse($course, 'Course created successfully');
+        return $this->createdResponse($course, 'Kursus berhasil dibuat');
     }
 
     public function update(Request $request, $id): JsonResponse

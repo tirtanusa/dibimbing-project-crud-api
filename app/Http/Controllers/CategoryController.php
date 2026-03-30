@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index(): JsonResponse{
         $data = Category::all();
 
-        return $this->successResponse($data, 'Categories retrieved successfully');
+        return $this->successResponse($data, 'Kategori berhasil diambil');
     }
 
     public function show(string $id){
@@ -25,7 +25,7 @@ class CategoryController extends Controller
             return $this->notFoundResponse();
         }
 
-        return $this->successResponse($data, "Category retrieved successfully");
+        return $this->successResponse($data, "Kategori berhasil diambil");
     }
 
     public function store(Request $request){
@@ -41,5 +41,21 @@ class CategoryController extends Controller
         $data = Category::create($validated);
 
         return $this->createdResponse($data);
+    }
+
+    public function update(string $id, Request $request): JsonResponse{
+        $validated = $request->validate([
+            "name" => "required|string|min:3|max:100|"
+        ],[
+            'name.required' => 'Name tidak boleh kosong',
+            'name.string' => 'Name harus berupa teks',
+            'name.min' => 'Name minimal 3 karakter',
+            'name.max' => 'Name maksimal 100 karakter'
+        ]);
+
+        $data = Category::findOrFail($id);
+        $data->update($validated);
+
+        return $this->successResponse($data, "Kategori berhasil diperbarui");
     }
 }

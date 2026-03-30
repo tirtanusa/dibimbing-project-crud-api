@@ -11,22 +11,15 @@ Route::get('/user',[UserController::class, 'index']);
 
 
 //Courses CRUD
-Route::get('/courses', [CourseController::class, 'index']);
-Route::get('/courses/{id}', [CourseController::class, 'show']);
-Route::post('/courses', [CourseController::class, 'store']);
-Route::match(['put', 'patch'],'/courses/{id}', [CourseController::class, 'update']);
-Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
+Route::apiResource('courses', CourseController::class)->except(['edit', 'create']);
 //Courses CRUD
 
 //Users CRUD
-Route::get('/users', [UserController::class, 'index']);
-Route::post('/users', [UserController::class, 'store']);
+Route::apiResource('users', UserController::class)->except(['edit', 'create']);
 //Users CRUD
 
 //Category CRUD
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/categories/{id}', [CategoryController::class, 'show']);
-Route::post('/categories', [CategoryController::class, 'store']);
+Route::apiResource('categories', CategoryController::class)->except(['edit', 'create']);
 //Category CRUD
 
 

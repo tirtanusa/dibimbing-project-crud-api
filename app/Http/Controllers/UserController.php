@@ -20,7 +20,7 @@ class UserController extends Controller
             return $this->notFoundResponse();
         }
 
-        return $this->successResponse($users, 'Users retrieved successfully');
+        return $this->successResponse($users, 'Data User berhasil diambil');
     }
 
 
@@ -69,6 +69,6 @@ class UserController extends Controller
 
         $users = User::create($validated);
 
-        return $this->createdResponse($users);
+        return $this->createdResponse($users, 'User berhasil dibuat');
     }
 }

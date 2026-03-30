@@ -8,7 +8,7 @@ trait ApiResponse{
     //Success Response
     protected function successResponse(
             mixed $data = null,
-            string $message = 'Success',
+            string $message = 'Pesan sukses',
             int $code = 200
         ): JsonResponse {
         return response()->json([
@@ -58,4 +58,12 @@ trait ApiResponse{
         return $this->errorResponse($message, 422, $errors);
     }
     //Validation error response
+
+    //Unauthorized response
+    protected function unauthorizedResponse(
+        string $message = 'Anda tidak memiliki akses untuk mengubah data ini'
+    ): JsonResponse{
+        return $this->errorResponse($message, 403);
+    }
+    //Unauthorized response
 }
