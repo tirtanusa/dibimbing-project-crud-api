@@ -14,6 +14,8 @@ class Course extends Model
         'title',
         'description',
         'price',
+        'enrolled_count',
+        'rating',
         'max_student',
         'current_student',
         'level',
