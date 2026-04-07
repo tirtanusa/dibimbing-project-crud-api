@@ -7,19 +7,25 @@ use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 
 class CategoryController extends Controller
 {
     use SoftDeletes, ApiResponse;
 
     public function index(): JsonResponse{
-        $data = Category::all();
+        $data = Cache::remember('categories', 60, function () {
+            return Category::all();
+        });
 
         return $this->successResponse($data, 'Kategori berhasil diambil');
     }
 
     public function show(string $id){
-        $data = Category::findOrFail($id);
+        $data = Cache::remember('categories.' . $id, 60, function () use ($id) {
+            return Category::findOrFail($id);
+        });
 
         if(!$data){
             return $this->notFoundResponse();

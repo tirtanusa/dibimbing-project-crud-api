@@ -7,6 +7,8 @@ use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -14,9 +16,11 @@ class UserController extends Controller
     use SoftDeletes, ApiResponse;
 
     public function index(): JsonResponse{
-        $users = User::all();
+        $users = Cache::remember('users', 60, function(){
+            return User::all();
+        });
 
-        if(!$users){
+        if($users->isEmpty()){
             return $this->notFoundResponse();
         }
 

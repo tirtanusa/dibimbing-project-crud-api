@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 
 class CourseController extends Controller
 {
@@ -16,34 +17,38 @@ class CourseController extends Controller
     //Get All Courses
     public function index(): JsonResponse
     {
-        $query = Course::with(['category', 'instructor:id,name']);
+        $cacheKey = 'courses_' . request()->getQueryString();
 
-        // Search Judul
-        if(request()->has('search')){
-            $search = request('search');
-            $query->where('title', 'like', "%{$search}%");
-        }
+         $course = Cache::remember($cacheKey, 60, function () {
+             $query = Course::with(['category', 'instructor:id,name']);
 
-        // Filter level
-        if(request()->has('level')){
-            $query->where('level', request('level'));
-        }
+             // Search Judul
+             if(request()->has('search')){
+                 $search = request('search');
+                 $query->where('title', 'like', "%{$search}%");
+             }
 
-        // Filter category
-        if(request()->has('category_id')){
-            $query->where('category_id', request('category_id'));
-        }
+             // Filter level
+             if(request()->has('level')){
+                 $query->where('level', request('level'));
+             }
 
-        // Sorting
-        $sortBy = request('sort_by', 'created_at');
-        $order = request('order', 'desc');
+             // Filter category
+             if(request()->has('category_id')){
+                 $query->where('category_id', request('category_id'));
+             }
 
-        if(in_array($sortBy, ['price','enrolled_count','rating','created_at']) &&
-        in_array($order, ['asc','desc'])){
-            $query->orderBy($sortBy, $order);
-        }
+             // Sorting
+             $sortBy = request('sort_by', 'created_at');
+             $order = request('order', 'desc');
 
-        $course = $query->get();
+             if(in_array($sortBy, ['price','enrolled_count','rating','created_at']) &&
+             in_array($order, ['asc','desc'])){
+                 $query->orderBy($sortBy, $order);
+             }
+
+             return $query->get();
+         });
 
         if($course->isEmpty()){
             return $this->notFoundResponse('Kursus tidak ditemukan');
@@ -53,7 +58,9 @@ class CourseController extends Controller
     }
 
     public function show(string $request): JsonResponse{
-        $course = Course::with(['category', 'instructor:id,name'])->findOrFail($request);
+        $course = Cache::remember('courses.' . $request, 60, function () use ($request) {
+            return Course::with(['category', 'instructor:id,name'])->findOrFail($request);
+        });
 
         if(!$course){
             return $this->notFoundResponse();
