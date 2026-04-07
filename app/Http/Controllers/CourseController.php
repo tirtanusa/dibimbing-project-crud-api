@@ -17,7 +17,7 @@ class CourseController extends Controller
     //Get All Courses
     public function index(): JsonResponse
     {
-        $cacheKey = 'courses_' . request()->getQueryString();
+        $cacheKey = 'courses_' . md5(request()->fullUrl());
 
          $course = Cache::remember($cacheKey, 60, function () {
              $query = Course::with(['category', 'instructor:id,name']);
