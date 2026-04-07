@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 
 
 // Public routes
+Route::get('/courses/top-rated', [CourseController::class, 'topRated']);
+Route::get('/courses/lowest-price', [CourseController::class, 'lowestPrice']);
 Route::apiResource('courses', CourseController::class)->only(['index','show']);
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::apiResource('categories', CategoryController::class)->only(['index','show']);
+
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {

@@ -206,4 +206,38 @@ class CourseController extends Controller
 
         return $this->successResponse($course, 'Data berhasil dihapus');
     }
+
+    public function topRated(): JsonResponse{
+        $cacheKey = 'courses_top';
+
+        $topCourses = Cache::remember($cacheKey, 60, function () {
+            return Course::with(['category', 'instructor:id,name'])
+                ->orderBy('rating', 'desc')
+                ->take(5)
+                ->get();
+        });
+
+        if($topCourses->isEmpty()){
+            return $this->notFoundResponse('Kursus tidak ditemukan');
+        }
+
+        return $this->successResponse($topCourses, 'Data kursus terbaik berhasil diambil');
+    }
+
+    public function lowestPrice(): JsonResponse{
+        $cacheKey = 'courses_lowest_price';
+
+        $lowestPriceCourses = Cache::remember($cacheKey, 60, function () {
+            return Course::with(['category', 'instructor:id,name'])
+                ->orderBy('price', 'asc')
+                ->take(5)
+                ->get();
+        });
+
+        if($lowestPriceCourses->isEmpty()){
+            return $this->notFoundResponse('Kursus tidak ditemukan');
+        }
+
+        return $this->successResponse($lowestPriceCourses, 'Data kursus dengan harga terendah berhasil diambil');
+    }
 }
