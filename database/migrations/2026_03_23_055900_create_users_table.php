@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email',100)->unique();
             $table->string('password');
             $table->string('phone',20);
-            $table->enum('role', ['user', 'instructor'])->default("user");
+            $table->enum('role', ['user', 'instructor'])->default('user');
             $table->timestamps(); //created_at, updated_at
             $table->softDeletes();
         });

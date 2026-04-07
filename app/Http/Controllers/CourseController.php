@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CourseController extends Controller
 {
-    use SoftDeletes, ApiResponse;
+    use SoftDeletes, ApiResponse, AuthorizesRequests;
     //Get All Courses
     public function index(): JsonResponse
     {
@@ -135,6 +137,8 @@ class CourseController extends Controller
     {
         $course = Course::findOrFail($id);
 
+        $this->authorize('update', $course);
+
         $validated = $request->validate([
             'title' => 'sometimes|string|min:3|max:200',
             'description' => 'sometimes|string|max:1000',
@@ -188,6 +192,8 @@ class CourseController extends Controller
 
     public function destroy($id): JsonResponse{
         $course = Course::findOrFail($id);
+
+        $this->authorize('delete', $course);
 
         $course->delete();
 
