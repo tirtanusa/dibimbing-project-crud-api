@@ -9,11 +9,29 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use OpenApi\Attributes as OA;
 
 class UserController extends Controller
 {
     //
     use SoftDeletes, ApiResponse;
+
+    #[OA\Get(
+        path: "/users",
+        summary: "Get all users",
+        tags: ["Users"],
+        security: [["bearerAuth" => []]],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "List of users"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Users not found"
+            )
+        ]
+    )]
 
     public function index(): JsonResponse{
         $users = Cache::remember('users', 60, function(){
@@ -27,6 +45,35 @@ class UserController extends Controller
         return $this->successResponse($users, 'Data User berhasil diambil');
     }
 
+    #[OA\Post(
+        path: "/users",
+        summary: "Create new user",
+        tags: ["Users"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["name","email","password","phone"],
+                properties: [
+                    new OA\Property(property: "name", type: "string", example: "Tirta"),
+                    new OA\Property(property: "email", type: "string", example: "tirta@email.com"),
+                    new OA\Property(property: "password", type: "string", example: "password123"),
+                    new OA\Property(property: "phone", type: "string", example: "08123456789"),
+                    new OA\Property(property: "role", type: "string", enum: ["user","instructor"])
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "User created successfully"
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Validation error"
+            )
+        ]
+    )]
 
     public function store(Request $request): JsonResponse{
 
@@ -76,6 +123,31 @@ class UserController extends Controller
         return $this->createdResponse($users, 'User berhasil dibuat');
     }
 
+    #[OA\Get(
+        path: "/users/{id}",
+        summary: "Get user by ID",
+        tags: ["Users"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "User data retrieved"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "User not found"
+            )
+        ]
+    )]
+
     public function show(string $id): JsonResponse{
         $user = Cache::remember('users.' . $id, 60, function () use ($id) {
             return User::findOrFail($id);
@@ -87,6 +159,43 @@ class UserController extends Controller
 
         return $this->successResponse($user, 'Data User berhasil diambil');
     }
+
+    #[OA\Put(
+        path: "/users/{id}",
+        summary: "Update user",
+        tags: ["Users"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: "name", type: "string"),
+                    new OA\Property(property: "email", type: "string"),
+                    new OA\Property(property: "password", type: "string"),
+                    new OA\Property(property: "phone", type: "string"),
+                    new OA\Property(property: "role", type: "string", enum: ["user","instructor"])
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "User updated successfully"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "User not found"
+            )
+        ]
+    )]
 
     public function update(string $id, Request $request): JsonResponse{
         $validated = $request->validate([
@@ -135,6 +244,31 @@ class UserController extends Controller
 
          return $this->successResponse($user, "User berhasil diperbarui");
     }
+
+    #[OA\Delete(
+        path: "/users/{id}",
+        summary: "Delete user",
+        tags: ["Users"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "User deleted successfully"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "User not found"
+            )
+        ]
+    )]
 
     public function destroy(string $id): JsonResponse{
         $user = User::findOrFail($id);

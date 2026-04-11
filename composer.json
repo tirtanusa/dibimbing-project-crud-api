@@ -10,9 +10,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "darkaonline/l5-swagger": "*",
         "laravel/framework": "^13.0",
         "laravel/sanctum": "*",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "zircote/swagger-php": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

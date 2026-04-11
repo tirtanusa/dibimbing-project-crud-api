@@ -10,11 +10,63 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Cache;
+use OpenApi\Attributes as OA;
 
 class CourseController extends Controller
 {
     use SoftDeletes, ApiResponse, AuthorizesRequests;
-    //Get All Courses
+    #[OA\Get(
+        path: "/courses",
+        summary: "Get all courses",
+        tags: ["Courses"],
+        parameters: [
+            new OA\Parameter(
+                name: "search",
+                in: "query",
+                description: "Search course by title",
+                required: false,
+                schema: new OA\Schema(type: "string")
+            ),
+            new OA\Parameter(
+                name: "level",
+                in: "query",
+                description: "Filter by level",
+                required: false,
+                schema: new OA\Schema(type: "string", enum: ["beginner","intermediate","advanced"])
+            ),
+            new OA\Parameter(
+                name: "category_id",
+                in: "query",
+                description: "Filter by category",
+                required: false,
+                schema: new OA\Schema(type: "integer")
+            ),
+            new OA\Parameter(
+                name: "sort_by",
+                in: "query",
+                description: "Sort field",
+                required: false,
+                schema: new OA\Schema(type: "string", enum: ["price","enrolled_count","rating","created_at"])
+            ),
+            new OA\Parameter(
+                name: "order",
+                in: "query",
+                description: "Sort order",
+                required: false,
+                schema: new OA\Schema(type: "string", enum: ["asc","desc"])
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "List of courses"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Courses not found"
+            )
+        ]
+    )]
     public function index(): JsonResponse
     {
         $cacheKey = 'courses_' . md5(request()->fullUrl());
@@ -57,6 +109,30 @@ class CourseController extends Controller
         return $this->successResponse($course, 'Data kursus berhasil diambil');
     }
 
+    #[OA\Get(
+        path: "/courses/{id}",
+        summary: "Get course by ID",
+        tags: ["Courses"],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Course detail"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Course not found"
+            )
+        ]
+    )]
+
     public function show(string $request): JsonResponse{
         $course = Cache::remember('courses.' . $request, 60, function () use ($request) {
             return Course::with(['category', 'instructor:id,name'])->findOrFail($request);
@@ -68,6 +144,39 @@ class CourseController extends Controller
 
         return $this->successResponse($course, 'Data kursus berhasil diambil');
     }
+
+    #[OA\Post(
+        path: "/courses",
+        summary: "Create new course",
+        tags: ["Courses"],
+        security: [["bearerAuth" => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["title","description","price","max_student","instructor_id"],
+                properties: [
+                    new OA\Property(property: "title", type: "string"),
+                    new OA\Property(property: "description", type: "string"),
+                    new OA\Property(property: "price", type: "integer"),
+                    new OA\Property(property: "max_student", type: "integer"),
+                    new OA\Property(property: "level", type: "string", enum: ["beginner","intermediate","advanced"]),
+                    new OA\Property(property: "status", type: "string", enum: ["draft","published"]),
+                    new OA\Property(property: "instructor_id", type: "integer"),
+                    new OA\Property(property: "category_id", type: "integer")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "Course created successfully"
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Validation error"
+            )
+        ]
+    )]
 
     public function store(Request $request): JsonResponse
     {
@@ -140,6 +249,42 @@ class CourseController extends Controller
         return $this->createdResponse($course, 'Kursus berhasil dibuat');
     }
 
+    #[OA\Put(
+        path: "/courses/{id}",
+        summary: "Update course",
+        tags: ["Courses"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        requestBody: new OA\RequestBody(
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: "title", type: "string"),
+                    new OA\Property(property: "description", type: "string"),
+                    new OA\Property(property: "price", type: "integer"),
+                    new OA\Property(property: "max_student", type: "integer"),
+                    new OA\Property(property: "status", type: "string")
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Course updated"
+            ),
+            new OA\Response(
+                response: 403,
+                description: "Unauthorized"
+            )
+        ]
+    )]
+
     public function update(Request $request, $id): JsonResponse
     {
         $course = Course::findOrFail($id);
@@ -197,6 +342,31 @@ class CourseController extends Controller
         return $this->successResponse($course, 'Course updated successfully');
     }
 
+    #[OA\Delete(
+        path: "/courses/{id}",
+        summary: "Delete course",
+        tags: ["Courses"],
+        security: [["bearerAuth" => []]],
+        parameters: [
+            new OA\Parameter(
+                name: "id",
+                in: "path",
+                required: true,
+                schema: new OA\Schema(type: "integer")
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Course deleted"
+            ),
+            new OA\Response(
+                response: 403,
+                description: "Unauthorized"
+            )
+        ]
+    )]
+
     public function destroy($id): JsonResponse{
         $course = Course::findOrFail($id);
 
@@ -206,6 +376,18 @@ class CourseController extends Controller
 
         return $this->successResponse($course, 'Data berhasil dihapus');
     }
+
+    #[OA\Get(
+        path: "/courses/top-rated",
+        summary: "Get top rated courses",
+        tags: ["Courses"],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Top rated courses"
+            )
+        ]
+    )]
 
     public function topRated(): JsonResponse{
         $cacheKey = 'courses_top';
@@ -223,6 +405,18 @@ class CourseController extends Controller
 
         return $this->successResponse($topCourses, 'Data kursus terbaik berhasil diambil');
     }
+
+    #[OA\Get(
+        path: "/courses/lowest-price",
+        summary: "Get courses with lowest price",
+        tags: ["Courses"],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Lowest price courses"
+            )
+        ]
+    )]
 
     public function lowestPrice(): JsonResponse{
         $cacheKey = 'courses_lowest_price';
