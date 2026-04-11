@@ -65,4 +65,11 @@ class CategoryController extends Controller
 
         return $this->successResponse($data, "Kategori berhasil diperbarui");
     }
+
+    public function destroy(string $id): JsonResponse{
+        $data = Category::findOrFail($id);
+        $data->delete();
+
+        return $this->successResponse(null, "Kategori berhasil dihapus");
+    }
 }
