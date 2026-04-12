@@ -1,0 +1,1847 @@
+{
+  "info": {
+    "_postman_id": "28001afd-c458-4e12-b9b9-8328b0f4f353",
+    "name": "LMS Dibimbing Project API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28418665"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code == 200){\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"token\", jsonData.data.access_token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"admin1@example.com\",\r\n    \"password\": \"tirtanusa123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"admin1@example.com\",\r\n    \"password\": \"tirtanusa123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Apr 2026 08:26:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"access_token\": \"1|YtSStRzE1ZXXZD68x9RAa1kLxIgFr6wntdM5lrgk2001c2c5\",\n        \"token_type\": \"Bearer\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code == 201){\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"token\", jsonData.data.access_token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const timestamp = new Date().getTime();\r",
+                  "const randomEmail = `user${timestamp}@test.com`;\r",
+                  "\r",
+                  "pm.environment.set(\"dynamic_email\", randomEmail);\r",
+                  "pm.environment.set(\"dynamic_password\", \"password123\");\r",
+                  "\r",
+                  "console.log(\"Generate Email: \"+randomEmail);\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"YOUR_NAME\",\r\n    \"email\" : \"{{dynamic_email}}\",\r\n    \"phone\" : \"08123456788\",\r\n    \"password\": \"{{dynamic_password}}\",\r\n    \"password_confirmation\": \"{{dynamic_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Register",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\" : \"tirtanusa\",\r\n    \"email\" : \"admin1@example.com\",\r\n    \"phone\" : \"08123456789\",\r\n    \"password\": \"tirtanusa123\",\r\n    \"password_confirmation\": \"tirtanusa123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Apr 2026 08:25:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"name\": \"tirtanusa\",\n        \"email\": \"admin1@example.com\",\n        \"password\": \"$2y$12$ZjiK1pMMV1/UpqK9zpd2reqAbEgtNQIFpKw5/rsqPVR6sdniTAnbu\",\n        \"phone\": \"08123456789\",\n        \"role\": \"user\",\n        \"id\": 9\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "me"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Profile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "me"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Apr 2026 08:38:12 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"User profile retrieved successfully\",\n    \"data\": {\n        \"id\": 9,\n        \"name\": \"tirtanusa\",\n        \"email\": \"admin1@example.com\",\n        \"password\": \"$2y$12$ZjiK1pMMV1/UpqK9zpd2reqAbEgtNQIFpKw5/rsqPVR6sdniTAnbu\",\n        \"phone\": \"08123456789\",\n        \"role\": \"user\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Log Out",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code == 200){\r",
+                  "    pm.environment.set(\"token\", \"\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "logout"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Log Out",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/logout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Apr 2026 08:38:25 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Logout successful\",\n    \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Fetch all courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Fetch all courses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 05:02:08 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Courses retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Laravel Backend Development\",\n            \"description\": \"Belajar membangun REST API menggunakan Laravel dari dasar hingga advanced.\",\n            \"price\": \"150000.00\",\n            \"max_student\": 50,\n            \"current_student\": 0,\n            \"level\": \"beginner\",\n            \"status\": \"draft\",\n            \"instructor_id\": 1,\n            \"category_id\": 1,\n            \"formatted_price\": \"Rp. 150.000\",\n            \"category\": {\n                \"id\": 1,\n                \"name\": \"Backend Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"Tirtanusa Kurnia Adhi Perdana\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"title\": \"Javascript Fundamentals\",\n            \"description\": \"Belajar dasar-dasar Javascript\",\n            \"price\": \"100000.00\",\n            \"max_student\": 100,\n            \"current_student\": 0,\n            \"level\": \"beginner\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 2,\n            \"formatted_price\": \"Rp. 100.000\",\n            \"category\": {\n                \"id\": 2,\n                \"name\": \"Frontend Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"Tirtanusa Kurnia Adhi Perdana\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Fetch course by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses",
+                "{{id}}"
+              ]
+            },
+            "description": "## Fetch Course by ID\n\nRetrieves the details of a single course based on its unique identifier. Returns full course information including pricing, enrollment stats, level, and status.\n\n**Endpoint:** `GET /api/courses/{{id}}`\n\n---\n\n### Path Variable\n\n| Variable | Type | Description |\n| --- | --- | --- |\n| `id` | integer | The unique identifier of the course to retrieve. |\n\n---\n\n### Successful Response (200 OK)\n\n``` json\n{\n  \"success\": true,\n  \"message\": \"Course retrieved successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Laravel Backend Development\",\n    \"description\": \"Belajar membangun REST API menggunakan Laravel\",\n    \"price\": \"150000.00\",\n    \"max_student\": 50,\n    \"current_student\": 0,\n    \"level\": \"beginner\",\n    \"status\": \"draft\",\n    \"instructor_id\": 1,\n    \"category_id\": null,\n    \"formatted_price\": \"Rp. 150.000\"\n  }\n}\n\n ```\n\n### Response Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `success` | boolean | Indicates whether the request was successful. |\n| `message` | string | A human-readable status message. |\n| `data.id` | integer | Unique identifier of the course. |\n| `data.title` | string | Title of the course. |\n| `data.description` | string | Short description of the course content. |\n| `data.price` | string | Raw price value of the course. |\n| `data.max_student` | integer | Maximum number of students allowed to enroll. |\n| `data.current_student` | integer | Number of students currently enrolled. |\n| `data.level` | string | Difficulty level of the course (e.g., `beginner`). |\n| `data.status` | string | Publication status of the course (e.g., `draft`). |\n| `data.instructor_id` | integer | ID of the instructor who owns the course. |\n| `data.category_id` | integer|null | ID of the category the course belongs to, or `null`. |\n| `data.formatted_price` | string | Human-readable formatted price (e.g., `Rp. 150.000`). |"
+          },
+          "response": [
+            {
+              "name": "Fetch course by id",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses",
+                    "{{id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 05:03:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Course retrieved successfully\",\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"Javascript Fundamentals\",\n        \"description\": \"Belajar dasar-dasar Javascript\",\n        \"price\": \"100000.00\",\n        \"max_student\": 100,\n        \"current_student\": 0,\n        \"level\": \"beginner\",\n        \"status\": \"published\",\n        \"instructor_id\": 1,\n        \"category_id\": 2,\n        \"formatted_price\": \"Rp. 100.000\",\n        \"category\": {\n            \"id\": 2,\n            \"name\": \"Frontend Development\"\n        },\n        \"instructor\": {\n            \"id\": 1,\n            \"name\": \"Tirtanusa Kurnia Adhi Perdana\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Post a course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"PHP Fundamentals\",\r\n  \"description\": \"Belajar PHP dari 0 sampai mahir\",\r\n  \"price\": 99000,\r\n  \"max_student\": 100,\r\n  \"current_student\": 0,\r\n  \"level\": \"beginner\",\r\n  \"status\": \"published\",\r\n  \"instructor_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Post a course",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"title\": \"Laravel Backend Development\",\r\n  \"description\": \"Belajar membangun REST API menggunakan Laravel dari dasar hingga advanced.\",\r\n  \"price\": 150000,\r\n  \"max_student\": 50,\r\n  \"current_student\": 0,\r\n  \"level\": \"beginner\",\r\n  \"status\": \"draft\",\r\n  \"instructor_id\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 23 Mar 2026 09:36:44 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Data berhasil ditambahkan\",\n    \"data\": {\n        \"title\": \"Laravel Backend Development\",\n        \"description\": \"Belajar membangun REST API menggunakan Laravel dari dasar hingga advanced.\",\n        \"price\": 150000,\n        \"max_student\": 50,\n        \"current_student\": 0,\n        \"level\": \"beginner\",\n        \"status\": \"draft\",\n        \"instructor_id\": 1,\n        \"id\": 2,\n        \"formatted_price\": \"Rp. 150.000\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update a course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\" : \"React JS Complete Guide\",\r\n    \"description\" : \"Belajar membuat aplikasi web modern menggunakan React\",\r\n    \"price\": 160000,\r\n    \"max_student\": 90, \r\n    \"current_student\": 0,\r\n    \"level\": \"beginner\",\r\n    \"status\": \"published\",\r\n    \"instructor_id\": \"1\",\r\n    \"category_id\": \"2\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update a course",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\" : \"Javascript Fundamentals\",\r\n    \"description\" : \"Belajar dasar-dasar Javascript\",\r\n    \"price\": 100000,\r\n    \"max_student\": 100, \r\n    \"current_student\": 0,\r\n    \"level\": \"beginner\",\r\n    \"status\": \"published\",\r\n    \"instructor_id\": \"1\",\r\n    \"category_id\": \"2\" \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses",
+                    "{{id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:58:47 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Course updated successfully\",\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"Javascript Fundamentals\",\n        \"description\": \"Belajar dasar-dasar Javascript\",\n        \"price\": 100000,\n        \"max_student\": 100,\n        \"current_student\": 0,\n        \"level\": \"beginner\",\n        \"status\": \"published\",\n        \"instructor_id\": \"1\",\n        \"category_id\": \"2\",\n        \"formatted_price\": \"Rp. 100.000\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Patch a course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Ini sudah dirubah\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Patch a course",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"category_id\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses",
+                    "{{id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:54:19 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Course updated successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Laravel Backend Development\",\n        \"description\": \"Belajar membangun REST API menggunakan Laravel dari dasar hingga advanced.\",\n        \"price\": \"150000.00\",\n        \"max_student\": 50,\n        \"current_student\": 0,\n        \"level\": \"beginner\",\n        \"status\": \"draft\",\n        \"instructor_id\": 1,\n        \"category_id\": 1,\n        \"formatted_price\": \"Rp. 150.000\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete a course",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Delete a course",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses",
+                    "{{id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 05:09:22 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Data berhasil dihapus\",\n    \"data\": {\n        \"id\": 3,\n        \"title\": \"PHP Fundamentals\",\n        \"description\": \"Belajar PHP dari 0 sampai mahir\",\n        \"price\": \"99000.00\",\n        \"max_student\": 100,\n        \"current_student\": 0,\n        \"level\": \"beginner\",\n        \"status\": \"published\",\n        \"instructor_id\": 1,\n        \"category_id\": null,\n        \"formatted_price\": \"Rp. 99.000\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Lowest Price Courses",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses/lowest-price",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses",
+                "lowest-price"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Lowest Price",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses/top-rated",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses",
+                    "top-rated"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Apr 2026 10:41:00 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Data kursus terbaik berhasil diambil\",\n    \"data\": [\n        {\n            \"id\": 13,\n            \"title\": \"React JS Complete Guide\",\n            \"description\": \"Belajar membuat aplikasi web modern menggunakan React\",\n            \"price\": \"160000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 90,\n            \"current_student\": 0,\n            \"level\": \"beginner\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 2,\n            \"formatted_price\": \"Rp. 160.000\",\n            \"category\": {\n                \"id\": 2,\n                \"name\": \"Frontend Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 14,\n            \"title\": \"Vue.js Frontend Development\",\n            \"description\": \"Membuat UI interaktif dengan Vue.js\",\n            \"price\": \"140000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 70,\n            \"current_student\": 15,\n            \"level\": \"intermediate\",\n            \"status\": \"draft\",\n            \"instructor_id\": 1,\n            \"category_id\": 2,\n            \"formatted_price\": \"Rp. 140.000\",\n            \"category\": {\n                \"id\": 2,\n                \"name\": \"Frontend Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 15,\n            \"title\": \"Fullstack MERN Stack\",\n            \"description\": \"Membangun aplikasi fullstack menggunakan MongoDB, Express, React, Node\",\n            \"price\": \"180000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 60,\n            \"current_student\": 12,\n            \"level\": \"advanced\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 3,\n            \"formatted_price\": \"Rp. 180.000\",\n            \"category\": {\n                \"id\": 3,\n                \"name\": \"Fullstack Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 16,\n            \"title\": \"Flutter Mobile App Development\",\n            \"description\": \"Belajar membuat aplikasi mobile menggunakan Flutter\",\n            \"price\": \"170000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 75,\n            \"current_student\": 18,\n            \"level\": \"beginner\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 4,\n            \"formatted_price\": \"Rp. 170.000\",\n            \"category\": {\n                \"id\": 4,\n                \"name\": \"Mobile Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 17,\n            \"title\": \"Python for Data Science\",\n            \"description\": \"Analisis data menggunakan Python dan Pandas\",\n            \"price\": \"150000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 80,\n            \"current_student\": 22,\n            \"level\": \"beginner\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 5,\n            \"formatted_price\": \"Rp. 150.000\",\n            \"category\": {\n                \"id\": 5,\n                \"name\": \"Data Science\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Top Rated Courses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/courses/top-rated",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "courses",
+                "top-rated"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Top Rated Courses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/courses/top-rated",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "courses",
+                    "top-rated"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Apr 2026 10:42:01 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Data kursus terbaik berhasil diambil\",\n    \"data\": [\n        {\n            \"id\": 13,\n            \"title\": \"React JS Complete Guide\",\n            \"description\": \"Belajar membuat aplikasi web modern menggunakan React\",\n            \"price\": \"160000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 90,\n            \"current_student\": 0,\n            \"level\": \"beginner\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 2,\n            \"formatted_price\": \"Rp. 160.000\",\n            \"category\": {\n                \"id\": 2,\n                \"name\": \"Frontend Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 14,\n            \"title\": \"Vue.js Frontend Development\",\n            \"description\": \"Membuat UI interaktif dengan Vue.js\",\n            \"price\": \"140000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 70,\n            \"current_student\": 15,\n            \"level\": \"intermediate\",\n            \"status\": \"draft\",\n            \"instructor_id\": 1,\n            \"category_id\": 2,\n            \"formatted_price\": \"Rp. 140.000\",\n            \"category\": {\n                \"id\": 2,\n                \"name\": \"Frontend Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 15,\n            \"title\": \"Fullstack MERN Stack\",\n            \"description\": \"Membangun aplikasi fullstack menggunakan MongoDB, Express, React, Node\",\n            \"price\": \"180000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 60,\n            \"current_student\": 12,\n            \"level\": \"advanced\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 3,\n            \"formatted_price\": \"Rp. 180.000\",\n            \"category\": {\n                \"id\": 3,\n                \"name\": \"Fullstack Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 16,\n            \"title\": \"Flutter Mobile App Development\",\n            \"description\": \"Belajar membuat aplikasi mobile menggunakan Flutter\",\n            \"price\": \"170000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 75,\n            \"current_student\": 18,\n            \"level\": \"beginner\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 4,\n            \"formatted_price\": \"Rp. 170.000\",\n            \"category\": {\n                \"id\": 4,\n                \"name\": \"Mobile Development\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        },\n        {\n            \"id\": 17,\n            \"title\": \"Python for Data Science\",\n            \"description\": \"Analisis data menggunakan Python dan Pandas\",\n            \"price\": \"150000.00\",\n            \"enrolled_count\": 0,\n            \"rating\": 0,\n            \"max_student\": 80,\n            \"current_student\": 22,\n            \"level\": \"beginner\",\n            \"status\": \"published\",\n            \"instructor_id\": 1,\n            \"category_id\": 5,\n            \"formatted_price\": \"Rp. 150.000\",\n            \"category\": {\n                \"id\": 5,\n                \"name\": \"Data Science\"\n            },\n            \"instructor\": {\n                \"id\": 1,\n                \"name\": \"John Instructor\"\n            }\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Fetch Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/users",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Fetch users",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/users",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 05:12:06 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Users retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Tirtanusa Kurnia Adhi Perdana\",\n            \"email\": \"tirtanusa123@gmail.com\",\n            \"password\": \"tirtanusakeren\",\n            \"phone\": \"081234567891\",\n            \"role\": \"user\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add Users",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"Tirtanusa Kurnia Adhi Perdana\",\r\n    \"email\" : \"tirtanusa123@gmail.com\",\r\n    \"password\" : \"tirtanusakeren\",\r\n    \"phone\" : \"081234567891\"\r\n}"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/users",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Add Users",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\" : \"Tirtanusa Kurnia Adhi Perdana\",\r\n    \"email\" : \"tirtanusa123@gmail.com\",\r\n    \"password\" : \"tirtanusakeren\",\r\n    \"phone\" : \"081234567891\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/users",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 23 Mar 2026 09:19:36 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Data berhasil ditambahkan\",\n    \"data\": {\n        \"name\": \"Tirtanusa Kurnia Adhi Perdana\",\n        \"email\": \"tirtanusa123@gmail.com\",\n        \"password\": \"tirtanusakeren\",\n        \"phone\": \"081234567891\",\n        \"id\": 1\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Fetch categories",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/categories",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Fetch categories",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/categories",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:42:32 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Categories retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Backend Development\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Frontend Development\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Fetch category by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/categories/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Fetch category by id",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/categories/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "categories",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:43:01 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Category retrieved successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Backend Development\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"Frontend Development\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/categories",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Add category",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\" : \"Frontend Development\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/categories",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:41:51 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Data berhasil dibuat\",\n    \"data\": {\n        \"name\": \"Frontend Development\",\n        \"id\": 2\n    }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
