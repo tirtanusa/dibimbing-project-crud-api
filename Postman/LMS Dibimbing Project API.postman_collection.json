@@ -10,124 +10,6 @@
       "name": "Auth",
       "item": [
         {
-          "name": "Login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if(pm.response.code == 200){\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.environment.set(\"token\", jsonData.data.access_token);\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\":\"admin1@example.com\",\r\n    \"password\": \"tirtanusa123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Login",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"email\":\"admin1@example.com\",\r\n    \"password\": \"tirtanusa123\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/login",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "login"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.4.16"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 07 Apr 2026 08:26:50 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"access_token\": \"1|YtSStRzE1ZXXZD68x9RAa1kLxIgFr6wntdM5lrgk2001c2c5\",\n        \"token_type\": \"Bearer\"\n    }\n}"
-            }
-          ]
-        },
-        {
           "name": "Register",
           "event": [
             {
@@ -260,6 +142,135 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"name\": \"tirtanusa\",\n        \"email\": \"admin1@example.com\",\n        \"password\": \"$2y$12$ZjiK1pMMV1/UpqK9zpd2reqAbEgtNQIFpKw5/rsqPVR6sdniTAnbu\",\n        \"phone\": \"08123456789\",\n        \"role\": \"user\",\n        \"id\": 9\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code == 200){\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"token\", jsonData.data.access_token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"john@course.com\",\r\n    \"password\": \"password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"admin1@example.com\",\r\n    \"password\": \"tirtanusa123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Apr 2026 08:26:50 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"access_token\": \"1|YtSStRzE1ZXXZD68x9RAa1kLxIgFr6wntdM5lrgk2001c2c5\",\n        \"token_type\": \"Bearer\"\n    }\n}"
             }
           ]
         },
@@ -469,6 +480,325 @@
       ]
     },
     {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Fetch categories",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/categories",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Fetch categories",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/categories",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:42:32 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Categories retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Backend Development\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Frontend Development\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Fetch category by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/categories/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Fetch category by id",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/categories/1",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "categories",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:43:01 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Category retrieved successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Backend Development\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"Frontend Development\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/categories",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Add category",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\" : \"Frontend Development\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:8000/api/categories",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "127.0.0.1:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.4.16"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 24 Mar 2026 04:41:51 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Data berhasil dibuat\",\n    \"data\": {\n        \"name\": \"Frontend Development\",\n        \"id\": 2\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Courses",
       "item": [
         {
@@ -556,9 +886,15 @@
           "name": "Fetch course by id",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "raw": "http://127.0.0.1:8000/api/courses/{{course_id_example}}",
               "protocol": "http",
               "host": [
                 "127",
@@ -570,10 +906,10 @@
               "path": [
                 "api",
                 "courses",
-                "{{id}}"
+                "{{course_id_example}}"
               ]
             },
-            "description": "## Fetch Course by ID\n\nRetrieves the details of a single course based on its unique identifier. Returns full course information including pricing, enrollment stats, level, and status.\n\n**Endpoint:** `GET /api/courses/{{id}}`\n\n---\n\n### Path Variable\n\n| Variable | Type | Description |\n| --- | --- | --- |\n| `id` | integer | The unique identifier of the course to retrieve. |\n\n---\n\n### Successful Response (200 OK)\n\n``` json\n{\n  \"success\": true,\n  \"message\": \"Course retrieved successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Laravel Backend Development\",\n    \"description\": \"Belajar membangun REST API menggunakan Laravel\",\n    \"price\": \"150000.00\",\n    \"max_student\": 50,\n    \"current_student\": 0,\n    \"level\": \"beginner\",\n    \"status\": \"draft\",\n    \"instructor_id\": 1,\n    \"category_id\": null,\n    \"formatted_price\": \"Rp. 150.000\"\n  }\n}\n\n ```\n\n### Response Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `success` | boolean | Indicates whether the request was successful. |\n| `message` | string | A human-readable status message. |\n| `data.id` | integer | Unique identifier of the course. |\n| `data.title` | string | Title of the course. |\n| `data.description` | string | Short description of the course content. |\n| `data.price` | string | Raw price value of the course. |\n| `data.max_student` | integer | Maximum number of students allowed to enroll. |\n| `data.current_student` | integer | Number of students currently enrolled. |\n| `data.level` | string | Difficulty level of the course (e.g., `beginner`). |\n| `data.status` | string | Publication status of the course (e.g., `draft`). |\n| `data.instructor_id` | integer | ID of the instructor who owns the course. |\n| `data.category_id` | integer|null | ID of the category the course belongs to, or `null`. |\n| `data.formatted_price` | string | Human-readable formatted price (e.g., `Rp. 150.000`). |"
+            "description": "## Fetch Course by ID\n\nRetrieves the details of a single course based on its unique identifier. Returns full course information including pricing, enrollment stats, level, and status.\n\n**Endpoint:** `GET /api/courses/{{id}}`\n\n---\n\n### Path Variable\n\n| Variable | Type | Description |\n| --- | --- | --- |\n| `id` | integer | The unique identifier of the course to retrieve. |\n\n---\n\n### Successful Response (200 OK)\n\n``` json\n{\n  \"success\": true,\n  \"message\": \"Course retrieved successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Laravel Backend Development\",\n    \"description\": \"Belajar membangun REST API menggunakan Laravel\",\n    \"price\": \"150000.00\",\n    \"max_student\": 50,\n    \"current_student\": 0,\n    \"level\": \"beginner\",\n    \"status\": \"draft\",\n    \"instructor_id\": 1,\n    \"category_id\": null,\n    \"formatted_price\": \"Rp. 150.000\"\n  }\n}\n\n ```\n\n### Response Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `success` | boolean | Indicates whether the request was successful. |\n| `message` | string | A human-readable status message. |\n| `data.id` | integer | Unique identifier of the course. |\n| `data.title` | string | Title of the course. |\n| `data.description` | string | Short description of the course content. |\n| `data.price` | string | Raw price value of the course. |\n| `data.max_student` | integer | Maximum number of students allowed to enroll. |\n| `data.current_student` | integer | Number of students currently enrolled. |\n| `data.level` | string | Difficulty level of the course (e.g., `beginner`). |\n| `data.status` | string | Publication status of the course (e.g., `draft`). |\n| `data.instructor_id` | integer | ID of the instructor who owns the course. |\n| `data.category_id` | integer | null |\n| `data.formatted_price` | string | Human-readable formatted price (e.g., `Rp. 150.000`). |"
           },
           "response": [
             {
@@ -638,7 +974,33 @@
         },
         {
           "name": "Post a course",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if(pm.response.code == 201){\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"course_id_example\", jsonData.data.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
@@ -783,7 +1145,7 @@
               }
             },
             "url": {
-              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "raw": "http://127.0.0.1:8000/api/courses/{{course_id_example}}",
               "protocol": "http",
               "host": [
                 "127",
@@ -795,7 +1157,7 @@
               "path": [
                 "api",
                 "courses",
-                "{{id}}"
+                "{{course_id_example}}"
               ]
             }
           },
@@ -908,7 +1270,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"title\": \"Ini sudah dirubah\"\r\n}",
+              "raw": "{\r\n    \"title\": \"Ini sudah diubah\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -916,7 +1278,7 @@
               }
             },
             "url": {
-              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "raw": "http://127.0.0.1:8000/api/courses/{{course_id_example}}",
               "protocol": "http",
               "host": [
                 "127",
@@ -928,7 +1290,7 @@
               "path": [
                 "api",
                 "courses",
-                "{{id}}"
+                "{{course_id_example}}"
               ]
             }
           },
@@ -1035,7 +1397,7 @@
               }
             ],
             "url": {
-              "raw": "http://127.0.0.1:8000/api/courses/{{id}}",
+              "raw": "http://127.0.0.1:8000/api/courses/{{course_id_example}}",
               "protocol": "http",
               "host": [
                 "127",
@@ -1047,7 +1409,7 @@
               "path": [
                 "api",
                 "courses",
-                "{{id}}"
+                "{{course_id_example}}"
               ]
             }
           },
@@ -1519,325 +1881,6 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Data berhasil ditambahkan\",\n    \"data\": {\n        \"name\": \"Tirtanusa Kurnia Adhi Perdana\",\n        \"email\": \"tirtanusa123@gmail.com\",\n        \"password\": \"tirtanusakeren\",\n        \"phone\": \"081234567891\",\n        \"id\": 1\n    }\n}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Categories",
-      "item": [
-        {
-          "name": "Fetch categories",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/categories",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "categories"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Fetch categories",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/categories",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "categories"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.4.16"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 24 Mar 2026 04:42:32 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"Categories retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Backend Development\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Frontend Development\"\n        }\n    ]\n}"
-            }
-          ]
-        },
-        {
-          "name": "Fetch category by id",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/categories/1",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "categories",
-                "1"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Fetch category by id",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/categories/1",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "categories",
-                    "1"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.4.16"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 24 Mar 2026 04:43:01 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"Category retrieved successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Backend Development\"\n    }\n}"
-            }
-          ]
-        },
-        {
-          "name": "Add category",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Frontend Development\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8000/api/categories",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8000",
-              "path": [
-                "api",
-                "categories"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "Add category",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "type": "text"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"name\" : \"Frontend Development\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "http://127.0.0.1:8000/api/categories",
-                  "protocol": "http",
-                  "host": [
-                    "127",
-                    "0",
-                    "0",
-                    "1"
-                  ],
-                  "port": "8000",
-                  "path": [
-                    "api",
-                    "categories"
-                  ]
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Host",
-                  "value": "127.0.0.1:8000"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-Powered-By",
-                  "value": "PHP/8.4.16"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, private"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 24 Mar 2026 04:41:51 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Access-Control-Allow-Origin",
-                  "value": "*"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"Data berhasil dibuat\",\n    \"data\": {\n        \"name\": \"Frontend Development\",\n        \"id\": 2\n    }\n}"
             }
           ]
         }
