@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Course;
 use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,7 +33,7 @@ class CourseController extends Controller
                 in: "query",
                 description: "Filter by level",
                 required: false,
-                schema: new OA\Schema(type: "string", enum: ["beginner","intermediate","advanced"])
+                schema: new OA\Schema(type: "string", enum: ["beginner", "intermediate", "advanced"])
             ),
             new OA\Parameter(
                 name: "category_id",
@@ -46,14 +47,14 @@ class CourseController extends Controller
                 in: "query",
                 description: "Sort field",
                 required: false,
-                schema: new OA\Schema(type: "string", enum: ["price","enrolled_count","rating","created_at"])
+                schema: new OA\Schema(type: "string", enum: ["price", "enrolled_count", "rating", "created_at"])
             ),
             new OA\Parameter(
                 name: "order",
                 in: "query",
                 description: "Sort order",
                 required: false,
-                schema: new OA\Schema(type: "string", enum: ["asc","desc"])
+                schema: new OA\Schema(type: "string", enum: ["asc", "desc"])
             )
         ],
         responses: [
@@ -69,40 +70,38 @@ class CourseController extends Controller
     )]
     public function index(): JsonResponse
     {
-        $cacheKey = 'courses_' . md5(request()->fullUrl());
+        $query = Course::with(['category', 'instructor:id,name']);
 
-         $course = Cache::remember($cacheKey, 60, function () {
-             $query = Course::with(['category', 'instructor:id,name']);
+        // Search Judul
+        if (request()->has('search')) {
+            $search = request('search');
+            $query->where('title', 'like', "%{$search}%");
+        }
 
-             // Search Judul
-             if(request()->has('search')){
-                 $search = request('search');
-                 $query->where('title', 'like', "%{$search}%");
-             }
+        // Filter level
+        if (request()->has('level')) {
+            $query->where('level', request('level'));
+        }
 
-             // Filter level
-             if(request()->has('level')){
-                 $query->where('level', request('level'));
-             }
+        // Filter category
+        if (request()->has('category_id')) {
+            $query->where('category_id', request('category_id'));
+        }
 
-             // Filter category
-             if(request()->has('category_id')){
-                 $query->where('category_id', request('category_id'));
-             }
+        // Sorting
+        $sortBy = request('sort_by', 'created_at');
+        $order = request('order', 'desc');
 
-             // Sorting
-             $sortBy = request('sort_by', 'created_at');
-             $order = request('order', 'desc');
+        if (
+            in_array($sortBy, ['price', 'enrolled_count', 'rating', 'created_at']) &&
+            in_array($order, ['asc', 'desc'])
+        ) {
+            $query->orderBy($sortBy, $order);
+        }
 
-             if(in_array($sortBy, ['price','enrolled_count','rating','created_at']) &&
-             in_array($order, ['asc','desc'])){
-                 $query->orderBy($sortBy, $order);
-             }
+        $course =  $query->get();
 
-             return $query->get();
-         });
-
-        if($course->isEmpty()){
+        if ($course->isEmpty()) {
             return $this->notFoundResponse('Kursus tidak ditemukan');
         }
 
@@ -133,12 +132,13 @@ class CourseController extends Controller
         ]
     )]
 
-    public function show(string $request): JsonResponse{
+    public function show(string $request): JsonResponse
+    {
         $course = Cache::remember('courses.' . $request, 60, function () use ($request) {
             return Course::with(['category', 'instructor:id,name'])->findOrFail($request);
         });
 
-        if(!$course){
+        if (!$course) {
             return $this->notFoundResponse();
         }
 
@@ -153,14 +153,14 @@ class CourseController extends Controller
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ["title","description","price","max_student","instructor_id"],
+                required: ["title", "description", "price", "max_student", "instructor_id"],
                 properties: [
                     new OA\Property(property: "title", type: "string"),
                     new OA\Property(property: "description", type: "string"),
                     new OA\Property(property: "price", type: "integer"),
                     new OA\Property(property: "max_student", type: "integer"),
-                    new OA\Property(property: "level", type: "string", enum: ["beginner","intermediate","advanced"]),
-                    new OA\Property(property: "status", type: "string", enum: ["draft","published"]),
+                    new OA\Property(property: "level", type: "string", enum: ["beginner", "intermediate", "advanced"]),
+                    new OA\Property(property: "status", type: "string", enum: ["draft", "published"]),
                     new OA\Property(property: "instructor_id", type: "integer"),
                     new OA\Property(property: "category_id", type: "integer")
                 ]
@@ -367,7 +367,8 @@ class CourseController extends Controller
         ]
     )]
 
-    public function destroy($id): JsonResponse{
+    public function destroy($id): JsonResponse
+    {
         $course = Course::findOrFail($id);
 
         $this->authorize('delete', $course);
@@ -389,7 +390,8 @@ class CourseController extends Controller
         ]
     )]
 
-    public function topRated(): JsonResponse{
+    public function topRated(): JsonResponse
+    {
         $cacheKey = 'courses_top';
 
         $topCourses = Cache::remember($cacheKey, 60, function () {
@@ -399,7 +401,7 @@ class CourseController extends Controller
                 ->get();
         });
 
-        if($topCourses->isEmpty()){
+        if ($topCourses->isEmpty()) {
             return $this->notFoundResponse('Kursus tidak ditemukan');
         }
 
@@ -418,7 +420,8 @@ class CourseController extends Controller
         ]
     )]
 
-    public function lowestPrice(): JsonResponse{
+    public function lowestPrice(): JsonResponse
+    {
         $cacheKey = 'courses_lowest_price';
 
         $lowestPriceCourses = Cache::remember($cacheKey, 60, function () {
@@ -428,7 +431,7 @@ class CourseController extends Controller
                 ->get();
         });
 
-        if($lowestPriceCourses->isEmpty()){
+        if ($lowestPriceCourses->isEmpty()) {
             return $this->notFoundResponse('Kursus tidak ditemukan');
         }
 
